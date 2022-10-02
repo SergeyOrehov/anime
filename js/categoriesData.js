@@ -1,4 +1,4 @@
-const mainData = () => {
+const categoriesData = () => {
   const renderGanreList = (ganres) => {
     const dropdownBlock = document.querySelector(".header__menu .dropdown");
 
@@ -6,18 +6,18 @@ const mainData = () => {
       dropdownBlock.insertAdjacentHTML(
         "beforeend",
         `
-      <li><a href="./categories.html?ganre =${ganre} ">${ganre}</a></li>`
+      <li><a href="./categories.html?ganre=${ganre}">${ganre}</a></li>`
       );
     });
   };
 
   const renderAnimeList = (array, genres) => {
-    const wrapper = document.querySelector(".product .col-lg-8");
+    const wrapper = document.querySelector(".product-page .col-lg-8");
 
     genres.forEach((ganre) => {
       const productBlock = document.createElement("div");
       const listBlock = document.createElement("div");
-      const list = array.filter((item) => item.ganre === ganre);
+      const list = array.filter((item) => item.tags.includes(ganre));
 
       productBlock.classList.add("mb-5");
       listBlock.classList.add("row");
@@ -67,7 +67,7 @@ const mainData = () => {
                     <div class="product__item__text">
                         ${tagsBlock.outerHTML}
                       <h5>
-                        <a href="./anime-details.html?itemId = ${item.id}">${item.title}</a>
+                        <a href="./anime-details.html?itemId=${item.id}">${item.title}</a>
                       </h5>
                     </div>
                   </div>
@@ -114,14 +114,24 @@ const mainData = () => {
     .then((data) => {
       const genres = new Set();
 
+      const genreParams = new URLSearchParams(window.location.search).get(
+        "ganre"
+      );
+
       data.forEach((item) => {
         genres.add(item.ganre);
       });
 
       renderTopAnime(data.sort((a, b) => b.views - a.views).slice(0, 5));
-      renderAnimeList(data, genres);
+
+      if (genreParams) {
+        renderAnimeList(data, [genreParams]);
+      } else {
+        renderAnimeList(data, genres);
+      }
+
       renderGanreList(genres);
     });
 };
 
-mainData();
+categoriesData();
