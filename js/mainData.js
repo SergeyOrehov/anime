@@ -67,7 +67,7 @@ const mainData = () => {
                     <div class="product__item__text">
                         ${tagsBlock.outerHTML}
                       <h5>
-                        <a href="./anime-details.html?itemId = ${item.id}">${item.title}</a>
+                        <a href="./anime-details.html?itemId=${item.id}">${item.title}</a>
                       </h5>
                     </div>
                   </div>
