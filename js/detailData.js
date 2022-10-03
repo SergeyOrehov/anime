@@ -12,14 +12,14 @@ const detailData = () => {
   };
 
   const renderAnimeDetails = (array, itemId) => {
+    const breadcrumb = document.querySelector(".breadcrumb__links span");
     const animeObj = array.find((item) => item.id == itemId);
     const imageBlock = document.querySelector(".anime__details__pic");
-    console.log(imageBlock);
+
     //const viewsBlock = imageBlock.querySelector("view");
     const animeDetails = document.querySelector(".anime__details__content");
-    console.log(animeObj);
-    console.log(animeObj.t);
     if (animeObj) {
+      breadcrumb.innerHTML = `${animeObj.title}`;
       //imageBlock.dataset.setbg = animeObj.image;
       animeDetails.insertAdjacentHTML(
         "afterbegin",
